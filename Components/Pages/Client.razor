@@ -1,0 +1,85 @@
+@page "/client"
+@page "/"
+@rendermode InteractiveServer
+@using BlazorPostman.Data
+
+<PageTitle>Blazor Postman</PageTitle>
+<div class="pm-root">
+<div class="pm-bar">
+    <select class="pm-select" @bind="request.Method">
+        <option>GET</option>
+        <option>POST</option>
+        <option>PUT</option>
+        <option>DELETE</option>
+    </select>
+    <input class="pm-input" @bind="request.Url" placeholder="http://api.example.com" />
+    <input class="pm-input" style="max-width:150px" @bind="request.Name" placeholder="name" />
+    <button class="pm-btn" @onclick="SaveRequest">Save</button>
+    <button class="pm-btn pm-btn-send" @onclick="SendRequest">SEND</button>
+</div>
+<div class="pm-tabs">
+    <button class="pm-tab @(tab =="headers"?"active":"")" @onclick='()=>tab = "headers"'>Headers</button>
+    <button class="pm-tab @(tab =="body"?"active":"")" @onclick='()=>tab = "body"'>Body</button>
+    <button class="pm-tab @(tab =="history"?"active":"")" @onclick='()=>tab = "history"'>History</button>
+
+</div>
+<div class="pm-panel">
+    @if(tab =="headers")
+    {
+        @foreach(var h in request.Headers){
+            <div class="pm-header-row">
+                <input class="pm-header-input" @bind="h.Key" placeholder="Key" />
+                <input class="pm-header-input" @bind="h.Value" placeholder="Value" />
+                <button class="pm-btn" @onclick="() => request.Headers.Remove(h)">X</button>
+            </div>
+        }
+        <button class="pm-btn" @onclick="()=>request.Headers.Add(new HeaderItem())">+</button>
+    }
+    @if (tab == "body"){
+        <textarea class="pm-textarea" @bind = "request.Body" placeholder="{ }"></textarea>
+    }
+    @if (tab == "history"){
+        @foreach(var item in history){
+            <div style="padding:6px 0; border-bottom:1px solid #333; cursor:pointer;" @onclick="()=>LoadRequest(item)">
+                <span style="color: #58a6ff;">@item.Method</span>
+                <span style="margin-left:8px;"> @(string.IsNullOrEmpty(item.Name) ? item.Url : item.Name)</span>
+            </div>
+        }
+    }
+</div>
+<div class="pm-response">
+    @if (isLoading){
+        <span>Loading ...</span>
+    }
+    else if(response == null){
+        <span style="color:#55;"></span>
+    }
+    else{
+        <span class="@(response.IsSuccess ? "pm-status-ok":"pm-status-err")">
+            @response.StatusCode - @response.ResponseTimeMs ms
+        </span>
+        <pre class="pm-pre">@response.Body</pre>
+    }
+</div>
+</div>
+@code{
+    private RequestModel request = new();
+    private ResponseModel? response;
+    private List<RequestModel> history = new();
+    private string tab = "headers";
+    private bool isLoading = false;
+
+    private void LoadRequest(RequestModel item){
+        request = item;
+        tab = "headers";
+        response = null;
+    }
+    private async Task SendRequest(){
+
+    }
+    private async Task SaveRequest(){
+        if(string.IsNullOrWhiteSpace(request.Url)) return;
+        history.Insert(0, request);
+        request = new();
+    }
+}

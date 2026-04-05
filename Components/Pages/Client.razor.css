@@ -1,0 +1,113 @@
+.pm-root{
+    font-family: monospace;
+    background-color: #111;
+    color: #ccc;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    gap: 12px;
+}
+.pm-bar{
+    display: flex;
+    gap: 8px;
+}
+.pm-select, .pm-input, .pm-btn{
+    background: #1e1e1e;
+    border: 1px solid #333; 
+    color: #ccc;
+    font-family: monospace;
+    font-size: 13px;
+    padding: 8px 12px;
+    border-radius: 4px;
+    outline: none;
+}
+.pm-input{
+    flex: 1;
+}
+.pm-btn{
+    cursor: pointer;
+}
+.pm-btn-send{
+    background: #58a6ff;
+    color: #000;
+    font-weight: bold;
+    border: none;
+}
+.pm-tabs{
+    display: flex;
+    gap: 4px;
+}
+.pm-tab{
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: #555;
+    font-family: monospace;
+    font-size: 12px;
+    padding: 6px 12px;
+    cursor: pointer;
+}
+.pm-tab.active{
+    color: #ccc;
+    border-bottom-color: #58a6ff;
+}
+.pm-panel{
+    background: #1e1e1e;
+    border: 1px solid #333;
+    border-radius: 4px;
+    padding: 12px;
+    flex: 1;
+    overflow-y: auto;
+}
+.pm-header-row{
+    display: flex;
+    gap: 6px;
+    margin-bottom:6px;
+}
+.pm-header-input{
+    flex: 1;
+    background:#111;
+    border: 1px solid #333;
+    color: #ccc;
+    font-family: monospace;
+    font-size: 12px;
+    padding: 5px 8px;
+    border-radius: 3px;
+    outline: none;
+}
+.pm-textarea{
+    width: 100%;
+    height: 120px;
+    background: #111;
+    border: 1px solid #333;
+    color: #ccc;
+    font-family: monospace;
+    padding: 8px;
+    font-size: 12px;
+    border-radius: 3px;
+    resize: vertical;
+    outline: none;
+}
+.pm-response{
+    background: #1e1e1e;
+    border: 1px solid #333;
+    border-radius: 4px;
+    padding:12px;
+    flex: 1;
+    overflow-y:auto;
+}
+.pm-pre{
+    font-family: monospace;
+    font-size: 12px;
+    white-space: pre-wrap;
+    color: #ccc;
+}
+.pm-status-ok{
+    color: #3fb950;
+    font-weight: bold;
+}
+.pm-status-err{
+    color: #f85149;
+    font-weight: bold;
+}

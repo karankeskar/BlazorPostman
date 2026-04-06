@@ -1,5 +1,5 @@
 using BlazorPostman.Components;
-// using BlazorPostman.Services;
+using BlazorPostman.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,9 +13,9 @@ builder.Services.AddStackExchangeRedisCache(options =>
     options.InstanceName = "BlazorPostman_";
 });
 
-// builder.Services.AddHttpClient();
-// builder.Services.AddSingleton<HttpRequestService>();
-// builder.Services.AddSingleton<HistoryService>();
+builder.Services.AddHttpClient();
+builder.Services.AddSingleton<HttpRequestService>();
+builder.Services.AddSingleton<HistoryService>();
 
 var app = builder.Build();
 

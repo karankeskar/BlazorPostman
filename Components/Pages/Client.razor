@@ -2,6 +2,10 @@
 @page "/"
 @rendermode InteractiveServer
 @using BlazorPostman.Data
+@using BlazorPostman.Services
+@inject HttpRequestService RequestService
+@inject HistoryService HistoryService
+
 
 <PageTitle>Blazor Postman</PageTitle>
 <div class="pm-root">
@@ -74,12 +78,20 @@
         tab = "headers";
         response = null;
     }
+    protected override async Task OnInitializedAsync(){
+        history = await HistoryService.GetAllAsync();
+    }
     private async Task SendRequest(){
-
+        if(string.IsNullOrWhiteSpace(request.Url)) return;
+        isLoading = true;
+        response = null;
+        response = await RequestService.SendRequestAsync(request);
+        isLoading = false;
     }
     private async Task SaveRequest(){
         if(string.IsNullOrWhiteSpace(request.Url)) return;
-        history.Insert(0, request);
+        await HistoryService.SaveAsync(request);
+        history = await HistoryService.GetAllAsync();
         request = new();
     }
 }
